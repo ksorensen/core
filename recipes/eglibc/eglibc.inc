@@ -24,13 +24,17 @@ LIBTOOL_DEPENDS = ""
 
 MACHINE[unexport]       = "1"
 
-RECIPE_FLAGS:native = "toolchain_kernel_version_native"
-RECIPE_FLAGS:machine = "toolchain_kernel_version_machine"
-RECIPE_FLAGS:sdk = "toolchain_kernel_version_sdk"
+RECIPE_FLAGS:>native	= " toolchain_kernel_version_native eglibc_obsolete_rpc"
+RECIPE_FLAGS:>machine	= " toolchain_kernel_version_machine eglibc_obsolete_rpc"
+RECIPE_FLAGS:>sdk	= " toolchain_kernel_version_sdk"
 
 DEFAULT_USE_toolchain_kernel_version_native	= "2.6.32"
 DEFAULT_USE_toolchain_kernel_version_machine	= "2.6.32"
 DEFAULT_USE_toolchain_kernel_version_sdk	= "2.6.32"
+
+OBSOLETE_RPC = ""
+DEFAULT_USE_eglibc_obsolete_rpc = "1"
+OBSOLETE_RPC:>USE_eglibc_obsolete_rpc = " --enable-obsolete-rpc"
 
 MIN_KERNEL_VERSION = "${USE_toolchain_kernel_version_native}${USE_toolchain_kernel_version_machine}${USE_toolchain_kernel_version_sdk}"
 MIN_KERNEL_VERSION[expand] = "3"
@@ -47,6 +51,7 @@ EXTRA_OECONF += "\
 	--enable-kernel=${MIN_KERNEL_VERSION} \
 	--with-__thread \
 	--cache-file=config.cache \
+	${OBSOLETE_RPC} \
 "
 
 #ld-linux do NOT support RPATH. See get-dynamic-info.h within the eglibc src
