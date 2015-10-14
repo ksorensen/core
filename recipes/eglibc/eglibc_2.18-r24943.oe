@@ -10,6 +10,9 @@ SRC_URI += "file://typedef-caddr.patch;striplevel=2"
 SRC_URI += "file://bindir-paths.patch;striplevel=2"
 EXTRA_OECONF += "libc_cv_rootsbindir=${base_sbindir}"
 
+# Compile PowerPC startup code with -fPIC instead of -fpic
+SRC_URI:>TARGET_CPU_powerpc += "file://powerpc_fPIC.patch;striplevel=2"
+
 # On PowerPC32 references from within libc to gettimeofday
 # and time got resolved to placeholder versions of these system
 # calls.

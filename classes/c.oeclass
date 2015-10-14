@@ -64,6 +64,12 @@ CFLAGS_OPT_SPEED	?= "-O2 \
 CFLAGS_OPT_SIZE		?= "-Os"
 CFLAGS_OPT_DEBUG	?= "-O1 -g -fno-omit-frame-pointer"
 
+# Enable -fPIC for powerpc architectures to support address
+# space larger than 24 bits
+CFLAGS_OPT_SPEED:>TARGET_CPU_powerpc += " -fPIC"
+CFLAGS_OPT_SIZE:>TARGET_CPU_powerpc += " -fPIC"
+CFLAGS_OPT_DEBUG:>TARGET_CPU_powerpc += " -fPIC"
+
 HOST_CFLAGS_OPT:native		 = "${BUILD_CFLAGS_OPT}"
 HOST_CFLAGS_OPT:cross		 = "${BUILD_CFLAGS_OPT}"
 HOST_CFLAGS_OPT:machine		 = "${MACHINE_CFLAGS_OPT}"
